@@ -27,18 +27,19 @@ function preload(){
 }
 
 function setup(){
-  createCanvas(1200,650);
+  createCanvas(displayWidth,700);
   
+  ground = createSprite(displayWidth/2,630,displayWidth,20);
+  ground.addImage("ground",groundImage);
+
   gino = createSprite(220,590,50,50);
   gino.addAnimation("idle",heroImg);
   gino.addAnimation("running",gino_running);
   gino.scale = 2;
   gino.setCollider("circle",-5,10,20)
     
-
-  ground = createSprite(600,630,1200,20);
-  ground.addImage("ground",groundImage);
-  ground.x = ground.width /2;
+   console.log(displayWidth)
+ 
   
   // invisibleGround = createSprite(displayWidth/2,displayHeight-150,displayWidth,10);
   // invisibleGround = createSprite(00,630,1200,10);
@@ -84,8 +85,13 @@ function draw(){
   
   //invisibleGround.visible = false;
 
+  ground.velocityX = -2;   
+  console.log("ground.x" +ground.x);
+  console.log("displayWidth/2"+ displayWidth/2 )
   
-
+  if (ground.x < displayWidth/2){
+     ground.x = displayWidth/2;
+   }
   if(keyDown("RIGHT_ARROW")){
     gino.x+=10;
    gino.changeAnimation("running",gino_running);
@@ -133,10 +139,8 @@ function draw(){
   // if(invisibleGround.x < invisibleGround.width/2){
   //   invisibleGround.x=invisibleGround.width/2;
   // }
-  ground.velocityX = -2;   
-  if (ground.x < 600){
-    ground.x = ground.width/2;
-  }
+
+  
   
   gino.collide(ground);
   drawSprites();   
